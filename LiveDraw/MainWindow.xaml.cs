@@ -158,16 +158,21 @@ namespace AntFu7.LiveDraw
             _enable = b;
             //SetTopMost(false);
         }
+
+        private void SetMainInkAndBrushPreview(SolidColorBrush solidColorBrush)
+        {
+            var ani = new ColorAnimation(solidColorBrush.Color, Duration3);
+
+            MainInkCanvas.DefaultDrawingAttributes.Color = solidColorBrush.Color;
+            brushPreview.Background.BeginAnimation(SolidColorBrush.ColorProperty, ani);
+        }
         private void SetColor(ColorPicker b)
         {
             if (ReferenceEquals(_selectedColor, b)) return;
             var solidColorBrush = b.Background as SolidColorBrush;
             if (solidColorBrush == null) return;
 
-            var ani = new ColorAnimation(solidColorBrush.Color, Duration3);
-
-            MainInkCanvas.DefaultDrawingAttributes.Color = solidColorBrush.Color;
-            brushPreview.Background.BeginAnimation(SolidColorBrush.ColorProperty, ani);
+            SetMainInkAndBrushPreview(solidColorBrush);
             b.IsActived = true;
             if (_selectedColor != null)
                 _selectedColor.IsActived = false;
@@ -178,7 +183,7 @@ namespace AntFu7.LiveDraw
         {
             System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B);
             SolidColorBrush solidColorBrush = new SolidColorBrush(color);
-            MainInkCanvas.DefaultDrawingAttributes.Color = solidColorBrush.Color;
+            SetMainInkAndBrushPreview(solidColorBrush);
             _selectedColor.IsActived = false;
         }
         private void SetBrushSize(double s)
