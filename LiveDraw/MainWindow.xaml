@@ -230,6 +230,13 @@
                                 <local:ActivableButton x:Name="BrushSwitchButton" Click="BrushSwitchButton_Click">
                                     <Border x:Name="brushPreview" Width="5" Height="5" Background="#FFD6D6D6" CornerRadius="10"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </local:ActivableButton>
+                                <local:ActivableButton x:Name="ColorPickButton" Click="CustomColorPicker_Click" ToolTip="Choose color">
+                                    <Path Data="{DynamicResource IconColorLens}" RenderTransformOrigin="0.5,0.5">
+                                        <Path.RenderTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </local:ActivableButton>
                                 <local:ActivableButton x:Name="UndoButton" Click="UndoButton_Click" ToolTip="Undo">
                                     <local:ActivableButton.RenderTransform>
                                         <RotateTransform CenterX="16" CenterY="16" Angle="{Binding MinWidth, ElementName=Palette}"/>
@@ -296,13 +303,6 @@
                                 </local:ActivableButton>
                                 <local:ActivableButton x:Name="OrientationButton" Click="OrientationButton_Click">
                                     <Path Data="{DynamicResource IconMinimize}" RenderTransformOrigin="0.5,0.5">
-                                        <Path.RenderTransform>
-                                            <RotateTransform Angle="90"/>
-                                        </Path.RenderTransform>
-                                    </Path>
-                                </local:ActivableButton>
-                                <local:ActivableButton x:Name="ColorPickButton" Click="CustomColorPicker_Click">
-                                    <Path Data="{DynamicResource IconColorLens}" RenderTransformOrigin="0.5,0.5">
                                         <Path.RenderTransform>
                                             <RotateTransform Angle="90"/>
                                         </Path.RenderTransform>
