@@ -173,6 +173,14 @@ namespace AntFu7.LiveDraw
                 _selectedColor.IsActived = false;
             _selectedColor = b;
         }
+
+        private void SetColor(System.Drawing.Color selectedColor)
+        {
+            System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B);
+            SolidColorBrush solidColorBrush = new SolidColorBrush(color);
+            MainInkCanvas.DefaultDrawingAttributes.Color = solidColorBrush.Color;
+            _selectedColor.IsActived = false;
+        }
         private void SetBrushSize(double s)
         {
             MainInkCanvas.DefaultDrawingAttributes.Height = s;
@@ -439,6 +447,13 @@ namespace AntFu7.LiveDraw
             var border = sender as ColorPicker;
             if (border == null) return;
             SetColor(border);
+        }
+
+        private void CustomColorPicker_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog();
+            colorDialog.ShowDialog();
+            SetColor(colorDialog.Color);
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

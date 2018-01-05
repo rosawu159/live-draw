@@ -301,6 +301,13 @@
                                         </Path.RenderTransform>
                                     </Path>
                                 </local:ActivableButton>
+                                <local:ActivableButton x:Name="ColorPickButton" Click="CustomColorPicker_Click">
+                                    <Path Data="{DynamicResource IconColorLens}" RenderTransformOrigin="0.5,0.5">
+                                        <Path.RenderTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </local:ActivableButton>
                             </WrapPanel>
                         </StackPanel>
                     </WrapPanel>
