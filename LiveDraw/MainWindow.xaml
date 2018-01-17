@@ -219,7 +219,7 @@
                                 </Style>
                             </StackPanel.Style>
                             <Slider Background="{StaticResource FakeTransparent}" Minimum="1" ValueChanged="Slider_ValueChanged" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="True" Focusable="False" Maximum="5" Template="{StaticResource SliderHorizontal}" Foreground="#FFBC1919" Value="2" Height="20" Visibility="Collapsed"/>
-                            <WrapPanel x:Name="ButtonPanel" HorizontalAlignment="Center">
+                            <WrapPanel x:Name="ButtonPanel" HorizontalAlignment="Center" Margin="-27,0,7,0" Width="450">
                                 <WrapPanel.Resources>
                                     <Style TargetType="local:ActivableButton" BasedOn="{StaticResource FunctionalButton}">
                                         <Setter Property="Padding" Value="0"/>
@@ -253,17 +253,24 @@
                                         </Path.RenderTransform>
                                     </Path>
                                 </local:ActivableButton>
+
+                                <local:ActivableButton x:Name="EraserPartButton" Click="EraserPartButton_Click" ToolTip="Toggle eraser part mode">
+                                    <local:ActivableButton.RenderTransform >
+                                        <RotateTransform CenterX="16" CenterY="16" Angle="{Binding MinWidth, ElementName=Palette}"/>
+                                    </local:ActivableButton.RenderTransform>
+                                    <Path Data="{DynamicResource IconEraserPart}"/>
+                                </local:ActivableButton>
                                 <local:ActivableButton x:Name="EraserButton" Click="EraserButton_Click" ToolTip="Toggle eraser mode">
                                     <local:ActivableButton.RenderTransform >
                                         <RotateTransform CenterX="16" CenterY="16" Angle="{Binding MinWidth, ElementName=Palette}"/>
                                     </local:ActivableButton.RenderTransform>
-                                    <Path Data="{DynamicResource IconEraser}"/>
+                                    <Path Data="{DynamicResource IconTrashBox}"/>
                                 </local:ActivableButton>
-                                <local:ActivableButton x:Name="ClearButton" Click="ClearButton_Click" ToolTip="Clear screen" >
+                                <local:ActivableButton x:Name="ClearAllButton" Click="ClearButton_Click" ToolTip="Clear screen" >
                                     <local:ActivableButton.RenderTransform >
                                         <RotateTransform CenterX="16" CenterY="16" Angle="{Binding MinWidth, ElementName=Palette}"/>
                                     </local:ActivableButton.RenderTransform>
-                                    <Path Data="{DynamicResource IconTrashBox}" Width="13"/>
+                                    <Path Data="{DynamicResource IconEraserAll}" Width="13"/>
                                 </local:ActivableButton>
                                 <local:ActivableButton x:Name="PinButton" ToolTip="Topmost" Click="PinButton_Click" >
                                     <local:ActivableButton.RenderTransform >
