@@ -119,7 +119,7 @@ namespace AntFu7.LiveDraw
         private bool _enable;
         private readonly int[] _brushSizes = { 2, 5, 8, 13, 20 };
         private int _brushIndex = 1;
-        private bool _displayOrientation;
+		private bool _displayOrientation;
 
         private void SetDetailPanel(bool v)
         {
@@ -127,7 +127,7 @@ namespace AntFu7.LiveDraw
             {
                 DetailTogglerRotate.BeginAnimation(RotateTransform.AngleProperty, new DoubleAnimation(180, Duration5));
                 //DefaultColorPicker.Size = ColorPickerButtonSize.Middle;
-                DetailPanel.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, Duration4));
+                DetailPanel.BeginAnimation(OpacityProperty, new DoubleAnimation(0.5, 1, Duration4));
                 //PaletteGrip.BeginAnimation(WidthProperty, new DoubleAnimation(130, Duration3));
                 //MinimizeButton.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, Duration3));
                 //MinimizeButton.BeginAnimation(HeightProperty, new DoubleAnimation(0, 25, Duration3));
@@ -177,16 +177,18 @@ namespace AntFu7.LiveDraw
             if (_selectedColor != null)
                 _selectedColor.IsActived = false;
             _selectedColor = b;
-        }
+			
+		}
 
         private void SetColor(System.Drawing.Color selectedColor)
         {
-            System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B);
-            SolidColorBrush solidColorBrush = new SolidColorBrush(color);
-            SetMainInkAndBrushPreview(solidColorBrush);
+			System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B);
+			SolidColorBrush solidColorBrush = new SolidColorBrush(color);
+			SetMainInkAndBrushPreview(solidColorBrush);
             _selectedColor.IsActived = false;
-        }
-        private void SetBrushSize(double s)
+
+		}
+		private void SetBrushSize(double s)
         {
             MainInkCanvas.DefaultDrawingAttributes.Height = s;
             MainInkCanvas.DefaultDrawingAttributes.Width = s;
@@ -195,20 +197,35 @@ namespace AntFu7.LiveDraw
         }
         private void SetEraserMode(bool v)
         {
-            if (_eraserMode)
+            if (!_eraserMode)
             {
-                MainInkCanvas.EditingMode = InkCanvasEditingMode.EraseByStroke;
-                SetStaticInfo("Eraser Mode");
-            }
+				MainInkCanvas.EditingMode = InkCanvasEditingMode.EraseByStroke;
+				SetStaticInfo("Eraser Mode");
+			}
             else
             {
-                MainInkCanvas.EditingMode = InkCanvasEditingMode.Ink;
-                SetStaticInfo("");
-            }
+				MainInkCanvas.EditingMode = InkCanvasEditingMode.Ink;
+				SetStaticInfo("");
+			}
             EraserButton.IsActived = v;
             _eraserMode = v;
         }
-        private void SetOrientation(bool v)
+		private void SetPartEraserMode(bool v)
+		{
+			if (!_eraserMode)
+			{
+				MainInkCanvas.EditingMode = InkCanvasEditingMode.EraseByPoint;
+				SetStaticInfo("Part Eraser");
+			}
+			else
+			{
+				MainInkCanvas.EditingMode = InkCanvasEditingMode.Ink;
+				SetStaticInfo("");
+			}
+			EraserPartButton.IsActived = !v;
+			_eraserMode = !v;
+		}
+		private void SetOrientation(bool v)
         {
             PaletteRotate.BeginAnimation(RotateTransform.AngleProperty, new DoubleAnimation(v ? -90:0, Duration4));
             Palette.BeginAnimation(MinWidthProperty, new DoubleAnimation(v? 90:0, Duration7));
@@ -457,11 +474,14 @@ namespace AntFu7.LiveDraw
         private void CustomColorPicker_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog();
-            colorDialog.ShowDialog();
+			ColorPickButton.IsActived = true;
+			colorDialog.ShowDialog();
             SetColor(colorDialog.Color);
-        }
+			ColorPickButton.IsActived = false;
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		}
+
+		private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             //SetBrushSize(e.NewValue);
         }
@@ -697,8 +717,12 @@ namespace AntFu7.LiveDraw
         { EndDrag(); }
 
 
-        #endregion
 
+		#endregion
 
-    }
+		private void EraserPartButton_Click(object sender, RoutedEventArgs e)
+		{
+			SetPartEraserMode(_eraserMode);
+		}
+	}
 }
